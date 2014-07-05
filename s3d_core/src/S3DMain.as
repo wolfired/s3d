@@ -48,14 +48,14 @@ package{
 		}
 		
 		private function startup():void{
-			this.stage.align = StageAlign.TOP;
+			this.stage.align = StageAlign.TOP_LEFT;
 			this.stage.quality = StageQuality.BEST;
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			trace("startup");
 			
 			context_s3d = s3d_makeContext(graphics, 1 / 24.0);
-			var c:S3DCamera = s3d_makeCamera(S3DUtils.OriginPoint(), s3d_makePoint(0, 0, 1), S3DUtils.UpVector(), 120, 0.1, 1000, 400, 400);
+			var c:S3DCamera = s3d_makeCamera(S3DUtils.OriginPoint(), s3d_makePoint(0, 0, 1), S3DUtils.UpVector(), 90, 0.1, 1000, 400, 400);
 			
 			var model:S3DModel = new S3DModel();
 			model.vertex_raw_data = Vector.<Number>([
@@ -71,9 +71,9 @@ package{
 			
 			this.addEventListener(Event.ENTER_FRAME, function(event:Event):void{
 //				var mr:S3DMatrix = s3d_makeMatrix4Rotation(0, 0, 0);
-				var mr:S3DMatrix = s3d_makeMatrix4Rotation(0, 0, getTimer()/50);
+				var mr:S3DMatrix = s3d_makeMatrix4Rotation(0, 0, getTimer()/30);
 				var ms:S3DMatrix = s3d_makeMatrix4Scale(1, 1, 1);
-				var mt:S3DMatrix = s3d_makeMatrix4Translation(0, 0, 2);
+				var mt:S3DMatrix = s3d_makeMatrix4Translation(0, 0, 0);
 				s3d_matrixMultiplication(mr, ms);
 				s3d_matrixMultiplication(mr, mt);
 				model.world = s3d_matrixMultiplicationInRawData(S3DUtils.Vector4Number16(), model.vertex_raw_data, mr.raw_data);
