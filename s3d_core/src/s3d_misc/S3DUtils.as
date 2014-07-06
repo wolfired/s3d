@@ -7,6 +7,14 @@ package s3d_misc{
 	import s3d_struct.S3DVector;
 
 	public class S3DUtils{
+		public static function Vector4uintX(length:uint):Vector.<uint>{
+			return new Vector.<uint>(length, true);
+		}
+		
+		public static function Vector4NumberX(length:uint):Vector.<Number>{
+			return new Vector.<Number>(length, true);
+		}
+		
 		public static function Vector4Number16():Vector.<Number>{
 			return new Vector.<Number>(16, true);
 		}
