@@ -15,14 +15,6 @@ package s3d_misc{
 			return new Vector.<Number>(length, true);
 		}
 		
-		public static function Vector4Number16():Vector.<Number>{
-			return new Vector.<Number>(16, true);
-		}
-		
-		public static function Vector4Number4():Vector.<Number>{
-			return new Vector.<Number>(4, true);
-		}
-		
 		public static function ZeroVector():S3DVector{
 			return s3d_makeVector(0.0, 0.0, 0.0);
 		}

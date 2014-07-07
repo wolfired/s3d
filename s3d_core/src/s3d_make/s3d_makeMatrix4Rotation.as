@@ -20,7 +20,7 @@ package s3d_make{
 				0.0, cx, sx, 0.0,
 				0.0, 0.0, 0.0, 1.0
 			]);
-			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4Number16(), result.raw_data, raw_x));
+			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4NumberX(16), result.raw_data, raw_x));
 		}
 		if(ry_deg != 0.0){
 			var ry_rad:Number = ry_deg * S3DConst.DEG_2_RAD;
@@ -32,7 +32,7 @@ package s3d_make{
 				cy, 0.0, -sy, 0.0,
 				0.0, 0.0, 0.0, 1.0
 			]);
-			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4Number16(), result.raw_data, raw_y));
+			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4NumberX(16), result.raw_data, raw_y));
 		}
 		if(rz_deg != 0.0){
 			var rz_rad:Number = rz_deg * S3DConst.DEG_2_RAD;
@@ -44,7 +44,7 @@ package s3d_make{
 				0.0, 0.0, 1.0, 0.0,
 				0.0, 0.0, 0.0, 1.0
 			]);
-			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4Number16(), result.raw_data, raw_z));
+			s3d_matrixCopyFromRawData(result, s3d_matrixMultiplicationInRawData(S3DUtils.Vector4NumberX(16), result.raw_data, raw_z));
 		}
 		
 		return result;

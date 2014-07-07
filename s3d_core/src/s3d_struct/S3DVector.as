@@ -2,7 +2,7 @@ package s3d_struct{
 	import s3d_misc.S3DUtils;
 
 	public class S3DVector{
-		public const raw_data:Vector.<Number> = S3DUtils.Vector4Number4();
+		public const raw_data:Vector.<Number> = S3DUtils.Vector4NumberX(4);
 		
 		public function get x():Number { return raw_data[0]; }
 		public function set x(value:Number):void{
