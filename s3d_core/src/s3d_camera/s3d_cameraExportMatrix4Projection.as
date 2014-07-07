@@ -4,7 +4,7 @@ package s3d_camera{
 	import s3d_struct.S3DCamera;
 	import s3d_struct.S3DMatrix;
 
-	public function s3d_cameraExportProjectionMatrix(camera:S3DCamera):S3DMatrix{
+	public function s3d_cameraExportMatrix4Projection(camera:S3DCamera):S3DMatrix{
 		if(camera.projectionMatrixInvalid){
 			camera.projectionMatrix = s3d_makeMatrix4Projection(camera.fovx_deg, camera.aspectRatio, camera.near, camera.far)
 			

@@ -7,34 +7,32 @@ package{
 	import flash.events.KeyboardEvent;
 	import flash.utils.getTimer;
 	
-	import s3d_buffer.s3d_bufferUploadIndex;
-	import s3d_buffer.s3d_bufferUploadVertex;
-	
-	import s3d_camera.s3d_cameraExportCameraMatrix;
-	import s3d_camera.s3d_cameraExportProjectionMatrix;
-	import s3d_camera.s3d_cameraExportScreenMatrix;
+	import s3d_camera.s3d_cameraExportMatrix4Camera;
+	import s3d_camera.s3d_cameraExportMatrix4Projection;
+	import s3d_camera.s3d_cameraExportMatrix4Screen;
 	import s3d_camera.s3d_cameraResetViewPort;
 	
+	import s3d_context.s3d_contextAddDisplayObject;
 	import s3d_context.s3d_contextClear;
-	import s3d_context.s3d_contextCreateBuffer4Index;
-	import s3d_context.s3d_contextCreateBuffer4Vertex;
 	import s3d_context.s3d_contextDrawTriangle;
+	
+	import s3d_display.s3d_displayExportMatrix4Object;
+	import s3d_display.s3d_displayExportMatrix4World;
+	import s3d_display.s3d_displayMoveTo;
+	import s3d_display.s3d_displayRotateTo;
 	
 	import s3d_make.s3d_makeCamera;
 	import s3d_make.s3d_makeContext;
-	import s3d_make.s3d_makeMatrix4Rotation;
-	import s3d_make.s3d_makeMatrix4Scale;
-	import s3d_make.s3d_makeMatrix4Translation;
+	import s3d_make.s3d_makeDisplayObject;
 	import s3d_make.s3d_makePoint;
 	
-	import s3d_matrix.s3d_matrixMultiplication;
+	import s3d_matrix.s3d_matrixMultiplication2Matrix;
 	
 	import s3d_misc.S3DUtils;
 	import s3d_misc.s3d_perspectiveDivision;
 	
-	import s3d_struct.S3DBuffer4Index;
-	import s3d_struct.S3DBuffer4Vertex;
 	import s3d_struct.S3DContext;
+	import s3d_struct.S3DDisplayObject;
 	import s3d_struct.S3DMatrix;
 	import s3d_struct.S3DModel;
 	
@@ -103,29 +101,39 @@ package{
 				1, 6, 2
 			]);
 			
-			var vb:S3DBuffer4Vertex = s3d_contextCreateBuffer4Vertex(context, model.vertex_raw_data.length / 4, 4);
-			s3d_bufferUploadVertex(vb, model.vertex_raw_data);
-			var vi:S3DBuffer4Index = s3d_contextCreateBuffer4Index(context, model.index_raw_data.length);
-			s3d_bufferUploadIndex(vi, model.index_raw_data);
+			var obj0:S3DDisplayObject = s3d_makeDisplayObject(model);
+			s3d_displayMoveTo(obj0, -2, 0, 5);
+//			s3d_displayRotateTo(obj0, 0, 0, 0);
+			s3d_contextAddDisplayObject(context, obj0);
+			
+			var obj1:S3DDisplayObject = s3d_makeDisplayObject(model);
+			s3d_displayMoveTo(obj1, 2, 0, 5);
+			s3d_displayRotateTo(obj1, 0, 45, 0);
+			s3d_contextAddDisplayObject(context, obj1);
 			
 			this.addEventListener(Event.ENTER_FRAME, function(event:Event):void{
-				var m_world:S3DMatrix = S3DUtils.IdentityMatrix();
-				s3d_matrixMultiplication(m_world, s3d_makeMatrix4Rotation(0, 0, 0));
-				s3d_matrixMultiplication(m_world, s3d_makeMatrix4Rotation(getTimer()/20, getTimer()/20, 20));
-				s3d_matrixMultiplication(m_world, s3d_makeMatrix4Scale(1, 1, 1));
-				s3d_matrixMultiplication(m_world, s3d_makeMatrix4Translation(0, 0, 3));
-				func(vb.real_raw_data, vb.original_raw_data, m_world.raw_data, vb.vertex_wide);
+				s3d_displayRotateTo(obj0, 0, 0, getTimer()/60);
+				s3d_displayRotateTo(obj1, 0, 0, getTimer()/60);
 				
-				var m_camera:S3DMatrix = s3d_cameraExportCameraMatrix(context.camera);
-				var m_projection:S3DMatrix = s3d_cameraExportProjectionMatrix(context.camera);
-				var m_screen:S3DMatrix = s3d_cameraExportScreenMatrix(context.camera);
+				var m_world:S3DMatrix;
+				m_world = s3d_matrixMultiplication2Matrix(S3DUtils.ZeroMatrix(), s3d_displayExportMatrix4Object(obj0), s3d_displayExportMatrix4World(obj0));;
+				func(obj0.vertex_raw_data4world, obj0.vertex_raw_data, m_world.raw_data, 4);
+				m_world = s3d_matrixMultiplication2Matrix(S3DUtils.ZeroMatrix(), s3d_displayExportMatrix4Object(obj1), s3d_displayExportMatrix4World(obj1));;
+				func(obj1.vertex_raw_data4world, obj1.vertex_raw_data, m_world.raw_data, 4);
 				
-				func(vb.real_raw_data, vb.real_raw_data, m_camera.raw_data, vb.vertex_wide);
+				var m_camera:S3DMatrix = s3d_cameraExportMatrix4Camera(context.camera);
+				func(obj0.vertex_raw_data4camera, obj0.vertex_raw_data4world, m_camera.raw_data, 4);
+				func(obj1.vertex_raw_data4camera, obj1.vertex_raw_data4world, m_camera.raw_data, 4);
 				
-				func(vb.real_raw_data, vb.real_raw_data, m_projection.raw_data, vb.vertex_wide);
-				s3d_perspectiveDivision(vb);
+				var m_projection:S3DMatrix = s3d_cameraExportMatrix4Projection(context.camera);
+				func(obj0.vertex_raw_data4final, obj0.vertex_raw_data4camera, m_projection.raw_data, 4);
+				s3d_perspectiveDivision(obj0.vertex_raw_data4final, 4);
+				func(obj1.vertex_raw_data4final, obj1.vertex_raw_data4camera, m_projection.raw_data, 4);
+				s3d_perspectiveDivision(obj1.vertex_raw_data4final, 4);
 				
-				func(vb.real_raw_data, vb.real_raw_data, m_screen.raw_data, vb.vertex_wide);
+				var m_screen:S3DMatrix = s3d_cameraExportMatrix4Screen(context.camera);
+				func(obj0.vertex_raw_data4final, obj0.vertex_raw_data4final, m_screen.raw_data, 4);
+				func(obj1.vertex_raw_data4final, obj1.vertex_raw_data4final, m_screen.raw_data, 4);
 				
 				s3d_contextClear(context);
 				s3d_contextDrawTriangle(context,0, 2);

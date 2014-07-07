@@ -8,7 +8,7 @@ package s3d_camera{
 	import s3d_struct.S3DCamera;
 	import s3d_struct.S3DMatrix;
 
-	public function s3d_cameraExportCameraMatrix(camera:S3DCamera):S3DMatrix{
+	public function s3d_cameraExportMatrix4Camera(camera:S3DCamera):S3DMatrix{
 		if(camera.cameraMatrixInvalid){
 			camera.cameraMatrix = s3d_makeMatrix4UVN(camera.point_at, camera.point_to, camera.up_vector);
 			

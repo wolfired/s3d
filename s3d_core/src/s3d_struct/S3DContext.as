@@ -8,7 +8,6 @@ package s3d_struct{
 		public var frame_rate:Number;
 		public var camera:S3DCamera;
 		
-		public var vertex_buffer_linked_list:S3DBuffer4Vertex;
-		public var index_buffer_linked_list:S3DBuffer4Index;
+		public var head:S3DDisplayObject;
 	}
 }
