@@ -5,6 +5,7 @@ package{
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.utils.getTimer;
 	
 	import s3d_camera.s3d_cameraResetViewPort;
 	
@@ -86,12 +87,12 @@ package{
 			
 			obj0 = s3d_makeDisplayObject(model);
 			s3d_displayMoveTo(obj0, -2, 0, 5);
-			s3d_displayRotateTo(obj0, 0, 0, 45);
+//			s3d_displayRotateTo(obj0, 0, 0, 45);
 			s3d_contextAddDisplayObject(context, obj0);
 			
 			obj1 = s3d_makeDisplayObject(model);
 			s3d_displayMoveTo(obj1, 2, 0, 5);
-			s3d_displayRotateTo(obj1, 0, 45, 0);
+//			s3d_displayRotateTo(obj1, 0, 45, 0);
 			s3d_contextAddDisplayObject(context, obj1);
 			
 			trace("endup");
@@ -105,6 +106,9 @@ package{
 		}
 		
 		private function onEnterFrame(event:Event):void{
+			s3d_displayRotateTo(obj0, getTimer()/20, getTimer()/20, getTimer()/20);
+			s3d_displayRotateTo(obj1, getTimer()/30, getTimer()/30, getTimer()/30);
+			
 			s3d_contextElapse(context, 1/60);
 		}
 	}

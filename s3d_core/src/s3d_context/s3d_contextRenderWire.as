@@ -1,9 +1,8 @@
 package s3d_context{
 	import s3d_struct.S3DContext;
 	import s3d_struct.S3DDisplayObject;
-	
 
-	public function s3d_contextDrawTriangle(context:S3DContext, start_triangle:uint, count_triangle:uint):void{
+	public function s3d_contextRenderWire(context:S3DContext, start_triangle:uint, count_triangle:uint):void{
 		var vertex_raw_data:Vector.<Number>;
 		var index_raw_data:Vector.<uint>;
 		

@@ -8,6 +8,7 @@ package s3d_context{
 	
 	import s3d_matrix.s3d_matrixMultiplication2Matrix;
 	
+	import s3d_misc.S3DConst;
 	import s3d_misc.S3DUtils;
 	import s3d_misc.s3d_batchMatrixMultiplication;
 	import s3d_misc.s3d_perspectiveDivision;
@@ -48,6 +49,11 @@ package s3d_context{
 		}
 		
 		s3d_contextClear(context);
-		s3d_contextDrawTriangle(context,0, 2);
+		
+		if(S3DConst.RENDER_TYPE_WIRE == context.render_type){
+			s3d_contextRenderWire(context,0, 2);
+		}else if(S3DConst.RENDER_TYPE_SOLID == context.render_type){
+			s3d_contextRenderSolid(context,0, 2);
+		}
 	}
 }
