@@ -9,7 +9,9 @@ package s3d_struct{
 		public var near:Number = 0.1;
 		public var far:Number = 1000.0;
 		
+		public var view_port_original_width:Number = 100.0;
 		public var view_port_width:Number = 100.0;
+		public var view_port_original_height:Number = 100.0;
 		public var view_port_height:Number = 100.0;
 		public var aspectRatio:Number = 1.0;
 		

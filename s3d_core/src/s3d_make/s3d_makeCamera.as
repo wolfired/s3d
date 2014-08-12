@@ -14,8 +14,8 @@ package s3d_make{
 		result.fovx_deg = fovx;
 		result.near = near;
 		result.far = far;
-		result.view_port_width = view_port_width;
-		result.view_port_height = view_port_height;
+		result.view_port_original_width = result.view_port_width = view_port_width;
+		result.view_port_original_height = result.view_port_height = view_port_height;
 		result.aspectRatio = view_port_width / view_port_height;
 		result.cameraMatrixInvalid = result.projectionMatrixInvalid = result.screenMatrixInvalid = true;
 		return result;
