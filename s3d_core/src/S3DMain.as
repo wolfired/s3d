@@ -1,10 +1,13 @@
 package{
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.utils.getTimer;
 	
 	import s3d_camera.s3d_cameraResetViewPort;
 	
@@ -12,6 +15,7 @@ package{
 	import s3d_context.s3d_contextElapse;
 	
 	import s3d_display.s3d_displayMoveTo;
+	import s3d_display.s3d_displayRotateTo;
 	
 	import s3d_make.s3d_makeCamera;
 	import s3d_make.s3d_makeContext;
@@ -54,7 +58,10 @@ package{
 			
 			trace("startup");
 			
-			context = s3d_makeContext(graphics, 1 / 24.0);
+			var bpd:BitmapData = new BitmapData(this.stage.stageWidth, this.stage.stageHeight);
+			this.addChild(new Bitmap(bpd));
+			
+			context = s3d_makeContext(bpd, 1 / 24.0);
 			context.camera = s3d_makeCamera(S3DUtils.OriginPoint(), s3d_makePoint(0, 0, 1), S3DUtils.UpVector(), 90, 0.1, 1000, this.stage.stageWidth, this.stage.stageHeight);
 			
 			var model:S3DModel = new S3DModel();
@@ -85,7 +92,7 @@ package{
 			
 			obj0 = s3d_makeDisplayObject(model);
 			s3d_displayMoveTo(obj0, 0, 0, 5);
-//			s3d_displayRotateTo(obj0, 0, 0, 45);
+//			s3d_displayRotateTo(obj0, 45, 45, 45);
 			s3d_contextAddDisplayObject(context, obj0);
 			
 			obj1 = s3d_makeDisplayObject(model);
@@ -104,10 +111,11 @@ package{
 		}
 		
 		private function onEnterFrame(event:Event):void{
-//			s3d_displayRotateTo(obj0, getTimer()/20, getTimer()/20, getTimer()/20);
-//			s3d_displayRotateTo(obj1, getTimer()/30, getTimer()/30, getTimer()/30);
+//			s3d_displayRotateTo(obj0, getTimer()/20, getTimer()/30, getTimer()/40);
+//			s3d_displayRotateTo(obj1, getTimer()/40, getTimer()/30, getTimer()/20);
 			
 			s3d_contextElapse(context, 1/60);
+//			trace(1);
 		}
 	}
 }
