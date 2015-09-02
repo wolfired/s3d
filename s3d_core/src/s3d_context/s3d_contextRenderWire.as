@@ -48,12 +48,22 @@ function line(target:BitmapData, pos0:Point, pos1:Point):void {
 	var step:int;
 	var end:int;
 
-	if(pos0.x <= pos1.x) {
-		step = pos0.x;
-		end = pos1.x;
+	if(Math.abs(a) > 1 || a == Infinity || a == -Infinity) {
+		if(pos0.y <= pos1.y) {
+			step = pos0.y;
+			end = pos1.y;
+		} else {
+			step = pos1.y;
+			end = pos0.y;
+		}
 	} else {
-		step = pos1.x;
-		end = pos0.x;
+		if(pos0.x <= pos1.x) {
+			step = pos0.x;
+			end = pos1.x;
+		} else {
+			step = pos1.x;
+			end = pos0.x;
+		}
 	}
 
 	target.lock();
@@ -61,7 +71,14 @@ function line(target:BitmapData, pos0:Point, pos1:Point):void {
 	var count:uint = 0;
 
 	for(; step <= end; ++step) {
-		target.setPixel32(step, a * step + b, 0xFFFF0000);
+		if(a == Infinity || a == -Infinity){
+			target.setPixel32(pos0.x, step, 0xFFFF0000);
+		}else if(Math.abs(a) > 1) {
+			target.setPixel32((step - b) / a, step, 0xFFFF0000);
+		} else {
+			target.setPixel32(step, a * step + b, 0xFFFF0000);
+		}
+
 //		target.setPixel32(step, a * step + b, this.getTex(step, a * step + b));
 		++count;
 	}
